@@ -5,16 +5,19 @@
   </head>
   <body>
     <h3>rock paper scissors game</h3>
-    <p>
-      <button onclick=" playGame('rock');">rock</button>
-      <button onclick=" playGame('paper');">paper</button>
-      <button onclick="  playGame('scissors');">scissors</button>
-      <button
-        onclick=" score.wins = 0; score.lose = 0; score.tie = 0; localStorage.removeItem('score')"
-      >
-        reset score
-      </button>
-    </p>
+
+    <button onclick=" playGame('rock');">rock</button>
+    <button onclick=" playGame('paper');">paper</button>
+    <button onclick="  playGame('scissors');">scissors</button>
+    <p class="js-score"></p>
+    <p class="js-result"></p>
+    <p class="js-move"></p>
+    <button
+      onclick=" score.wins = 0; score.lose = 0; score.tie = 0; localStorage.removeItem('score')
+      updateScoreElement();"
+    >
+      reset score
+    </button>
   </body>
 
   <script>
@@ -23,6 +26,9 @@
       lose: 0,
       tie: 0,
     };
+    updateScoreElement();
+
+    // function for player move
 
     function playGame(playerMove) {
       const computerMove = pickComputerMove();
@@ -61,13 +67,21 @@
         score.tie += 1;
       }
       localStorage.setItem("score", JSON.stringify(score));
-      alert(
-        `you picked ${playerMove}, computer picked ${computerMove}. ${result}!!
-    wins:${score.wins} losses: ${score.lose} tie: ${score.tie}`
-      );
-      console.log(result);
-      console.log(score);
+      updateScoreElement();
+      document.querySelector(".js-result").innerHTML = `${result}`;
+      document.querySelector(
+        ".js-move"
+      ).innerHTML = `you:${playerMove} computer ${computerMove}`;
     }
+    // function for updating scor in web
+
+    function updateScoreElement() {
+      document.querySelector(
+        ".js-score"
+      ).innerHTML = `wins:${score.wins} losses: ${score.lose} tie: ${score.tie}`;
+    }
+
+    // function for picking computer random move
 
     function pickComputerMove() {
       const randomNumber = Math.random();

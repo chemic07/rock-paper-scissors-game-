@@ -1,2 +1,0 @@
-# website
- rock paper scissors
